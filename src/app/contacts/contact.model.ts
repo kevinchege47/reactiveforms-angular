@@ -23,3 +23,6 @@ export interface Address {
 export const phoneTypeValues = [
   {title:'Mobile',value:'mobile'},{title:'Work',value:'work'},{title:'Other',value:'other'}
 ]
+export const addressTypeValues = [
+  {title:'Home',value:'Home'},{title:'Work',value:'work'},{title:'Other',value:'other'}
+]

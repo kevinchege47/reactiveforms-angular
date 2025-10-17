@@ -3,7 +3,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {ContactsService} from "../contacts/contacts.service";
-import {phoneTypeValues} from "../contacts/contact.model";
+import {phoneTypeValues,addressTypeValues} from "../contacts/contact.model";
 
 @Component({
   imports: [CommonModule, ReactiveFormsModule],
@@ -12,6 +12,7 @@ import {phoneTypeValues} from "../contacts/contact.model";
 })
 export class EditContactComponent implements OnInit {
   phoneTypes = phoneTypeValues;
+  addressTypes = addressTypeValues;
   contactForm = this.fb.nonNullable.group({
     id: ' ',
     firstName: ' ',

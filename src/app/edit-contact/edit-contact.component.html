@@ -39,11 +39,12 @@
           <input formControlName="city" placeholder="City"/>
           <input formControlName="state" placeholder="State/Region"/>
           <input formControlName="postalCode" placeholder="Zip/Postal Code"/>
-          <select>
-            <option value="home">Home</option>
-            <option value="work">Work</option>
-            <option value="mobile">Other</option>
+          <select formControlName="addressType">
+            @for (addressType of addressTypes; track addressType.title) {
+              <option [value]="addressType.value">{{ addressType.title }}</option>
+            }
           </select>
+
         </div>
       </div>
     </section>
