@@ -1,8 +1,9 @@
 import {CommonModule} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {ContactsService} from "../contacts/contacts.service";
+import {phoneTypeValues} from "../contacts/contact.model";
 
 @Component({
   imports: [CommonModule, ReactiveFormsModule],
@@ -10,16 +11,31 @@ import {ContactsService} from "../contacts/contacts.service";
   styleUrls: ['./edit-contact.component.css']
 })
 export class EditContactComponent implements OnInit {
-  contactForm = new FormGroup({
-    id: new FormControl(),
-    firstName: new FormControl(),
-    lastName: new FormControl(),
-    dateOfBirth: new FormControl(),
-    favoritesRanking: new FormControl()
+  phoneTypes = phoneTypeValues;
+  contactForm = this.fb.nonNullable.group({
+    id: ' ',
+    firstName: ' ',
+    lastName: ' ',
+    dateOfBirth: <Date | null> null,
+    favoritesRanking: <number | null> null,
+    phone: this.fb.nonNullable.group({
+      phoneNumber: ' ',
+      phoneType: ' '
+    }),
+    address: this.fb.nonNullable.group({
+      streetAddress: ' ',
+      city: ' ',
+      state: ' ',
+      postalCode: ' ',
+      addressType: ' ',
+    })
   });
 
 
-  constructor(private route: ActivatedRoute,private contactsService:ContactsService,private router:Router) {
+  constructor(private route: ActivatedRoute,
+              private contactsService:ContactsService,
+              private router:Router,
+              private fb:FormBuilder) {
   }
 
   ngOnInit() {
@@ -27,16 +43,14 @@ export class EditContactComponent implements OnInit {
     if (!contactId) return
     this.contactsService.getContact(contactId).subscribe((contact)=>{
       if(!contact) return;
-      this.contactForm.controls.id.setValue(contact.id)
-      this.contactForm.controls.firstName.setValue(contact.firstName)
-      this.contactForm.controls.lastName.setValue(contact.lastName)
-      this.contactForm.controls.dateOfBirth.setValue(contact.dateOfBirth)
+
+      this.contactForm.setValue(contact);
       }
     )
   }
 
   saveContact() {
-    this.contactsService.saveContact(this.contactForm.value).subscribe({
+    this.contactsService.saveContact(this.contactForm.getRawValue()).subscribe({
       next:()=> this.router.navigate(['/contacts'])
     });
   }
