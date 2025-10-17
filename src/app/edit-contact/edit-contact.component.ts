@@ -21,6 +21,9 @@ export class EditContactComponent implements OnInit {
   }
 
   saveContact() {
-
+console.log(this.firstName.value)
+console.log(this.lastName.value)
+console.log(this.dateofBirth.value)
+console.log(this.favoritesRanking.value)
   }
 }
