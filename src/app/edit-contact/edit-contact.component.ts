@@ -1,29 +1,43 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import {FormControl, ReactiveFormsModule} from "@angular/forms";
+import {CommonModule} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {ContactsService} from "../contacts/contacts.service";
 
 @Component({
-  imports: [CommonModule,ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './edit-contact.component.html',
   styleUrls: ['./edit-contact.component.css']
 })
 export class EditContactComponent implements OnInit {
-  firstName = new FormControl;
-  lastName = new FormControl;
-  dateofBirth = new FormControl;
-  favoritesRanking = new FormControl;
-  constructor(private route: ActivatedRoute) { }
+  contactForm = new FormGroup({
+    id: new FormControl(),
+    firstName: new FormControl(),
+    lastName: new FormControl(),
+    dateOfBirth: new FormControl(),
+    favoritesRanking: new FormControl()
+  });
+
+
+  constructor(private route: ActivatedRoute,private contactsService:ContactsService,private router:Router) {
+  }
 
   ngOnInit() {
     const contactId = this.route.snapshot.params['id'];
     if (!contactId) return
+    this.contactsService.getContact(contactId).subscribe((contact)=>{
+      if(!contact) return;
+      this.contactForm.controls.id.setValue(contact.id)
+      this.contactForm.controls.firstName.setValue(contact.firstName)
+      this.contactForm.controls.lastName.setValue(contact.lastName)
+      this.contactForm.controls.dateOfBirth.setValue(contact.dateOfBirth)
+      }
+    )
   }
 
   saveContact() {
-console.log(this.firstName.value)
-console.log(this.lastName.value)
-console.log(this.dateofBirth.value)
-console.log(this.favoritesRanking.value)
+    this.contactsService.saveContact(this.contactForm.value).subscribe({
+      next:()=> this.router.navigate(['/contacts'])
+    });
   }
 }
