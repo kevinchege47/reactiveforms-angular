@@ -16,6 +16,7 @@ export class EditContactComponent implements OnInit {
   contactForm = this.fb.nonNullable.group({
     id: ' ',
     firstName: ' ',
+    personal: false,
     lastName: ' ',
     dateOfBirth: <Date | null> null,
     favoritesRanking: <number | null> null,

@@ -7,6 +7,7 @@ export class InMemoryContactsApi implements InMemoryDbService {
       {
         id: '5CehW',
         firstName: 'Percival',
+        personal: false,
         lastName: 'Doodleplumb',
         dateOfBirth: new Date('1994/05/05'),
         favoritesRanking: 0,
@@ -22,6 +23,7 @@ export class InMemoryContactsApi implements InMemoryDbService {
       {
         id: 'A6rwe',
         firstName: 'Mortimer',
+        personal: false,
         lastName: 'Flungford',
         dateOfBirth: new Date('1988/10/05'),
         favoritesRanking: 0,
@@ -37,6 +39,7 @@ export class InMemoryContactsApi implements InMemoryDbService {
       {
         id: '3bNGA',
         firstName: 'Wanda',
+        personal: true,
         lastName: 'Giggleworth',
         dateOfBirth: new Date('1986/11/08'),
         favoritesRanking: 1,
